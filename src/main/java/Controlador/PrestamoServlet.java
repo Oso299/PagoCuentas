@@ -14,6 +14,17 @@ public class PrestamoServlet extends HttpServlet {
     private PrestamoDAO dao = new PrestamoDAO();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+     	
+    	// Proteccion del Sistema
+        HttpSession sesion = request.getSession(false);
+        if (sesion == null || sesion.getAttribute("usuarioLogeado") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+    	
+    	
+    	
         String action = request.getParameter("action");
         String nroClienteStr = request.getParameter("nro_cliente");
         int nro_cliente = (nroClienteStr != null) ? Integer.parseInt(nroClienteStr) : 0;

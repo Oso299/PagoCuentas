@@ -12,8 +12,17 @@ import java.util.List;
 @WebServlet("/ClienteServlet")
 public class ClienteServlet extends HttpServlet {
     private ClienteDAO dao = new ClienteDAO();
+    
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	// Proteccion del Sistema
+        HttpSession sesion = request.getSession(false);
+        if (sesion == null || sesion.getAttribute("usuarioLogeado") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+        
         String action = request.getParameter("action");
         String buscar = request.getParameter("buscar"); // <-- nuevo parámetro de búsqueda
 

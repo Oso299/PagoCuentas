@@ -14,6 +14,14 @@ public class CuotaServlet extends HttpServlet {
     private CuotaDAO dao = new CuotaDAO();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	  	
+    	// Proteccion del Sistema
+        HttpSession sesion = request.getSession(false);
+        if (sesion == null || sesion.getAttribute("usuarioLogeado") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+    	
         String action = request.getParameter("action");
         int id_prestamo = Integer.parseInt(request.getParameter("id_prestamo"));
 
